@@ -1,5 +1,39 @@
-from utils import nCr
-from poisson import *
+'''
+	Matt Finnell
+	Thursday May 29th 2014
+
+	Discrete Probablility Package
+		Contains 3 different classes of Discrete distributions
+	
+		Class Bernoulli
+		Class Binomial
+		Class Poisson
+'''
+
+import math
+from utils import *
+
+class Bernoulli:
+	'implementation of the Bernoulli distribution'
+
+	def __init__(self, myP):
+		if 0.0 <= myP and myP <= 1.0 :
+			self.p = myP
+		else :  
+			print("invalid bernoulli value")
+
+	def pmf(self, x):
+		if x == 0 or x == 1:
+			return self.p**x * (1.0 - self.p)**(1 - x)
+		print("x value is not contained within bernoulli range of {0,1}")
+		return 0.0
+	
+	def mean(self):
+		return self.p
+	
+	def variance(self):
+		return self.p * (1.0 - self.p)
+
 
 class Binomial:
 	'implementation of the Binomial Distribution'
@@ -50,3 +84,19 @@ class Binomial:
 			return self.n * self.p * (1 - self.p)
 		else :
 			return self.poisson.variance()
+
+
+class Poisson:
+	'implementation of the Poisson Distribution'
+	def __init__(self, _lambda):
+		print("using poisson approximation")
+		self._lambda = _lambda
+	
+	def pmf(self, x):
+		return math.e**(-self._lambda) * ((self._lambda**x) / factorial(x))
+
+	def mean(self):
+		return self._lambda
+
+	def variance(self):
+		return self._lambda

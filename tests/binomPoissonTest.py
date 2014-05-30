@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from binomial import *
+from discrete import *
 
 
 n = int(raw_input("enter population size: "))

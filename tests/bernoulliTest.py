@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from bernoulli import *
+from discrete import *
 
 p1 = 0.75
 p2 = 0.50
