@@ -1,4 +1,5 @@
-from math import e
+import math
+from utils import factorial
 
 class Poisson:
 	'implementation of the Poisson Distribution'

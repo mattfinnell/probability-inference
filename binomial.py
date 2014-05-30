@@ -24,10 +24,10 @@ class Binomial:
 
 	def pmf(self, x):
 		if x >= 0 and x <= self.n :
-			if self.poisson is not None :
+			if self.poisson is None :
 				return nCr(self.n, x) * self.p**x * (1.0 - self.p)**(self.n - x)
 			else :
-				return poisson(x)
+				return self.poisson.pmf(x)
 
 		print("invalid value for x. 0 <= x <= n")
 		return 0
@@ -49,4 +49,4 @@ class Binomial:
 		if self.poisson is None :
 			return self.n * self.p * (1 - self.p)
 		else :
-			return poisson.variance()
+			return self.poisson.variance()
