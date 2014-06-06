@@ -1,3 +1,15 @@
+'''
+	Matt Finnell
+	Friday June 6th 2014
+
+	Normal Distribution Package
+		Contains two classes regarding the Normal Distribution
+
+		Class StandardNormal		--standard normal distribution
+		Class Normal				--Normal dist with custom mean
+										and variance.
+'''
+
 from math import *
 from random import *
 
