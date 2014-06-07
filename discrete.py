@@ -13,8 +13,12 @@
 import math
 from utils import *
 
+'''
+Bernoulli Discrete Distribution
+	A very simple and slightly impractical distribution that just measures
+	the probability of one event turning out to be true or false...
+'''
 class Bernoulli:
-	'implementation of the Bernoulli distribution'
 
 	def __init__(self, myP):
 		if 0.0 <= myP and myP <= 1.0 :
@@ -34,10 +38,24 @@ class Bernoulli:
 	def variance(self):
 		return self.p * (1.0 - self.p)
 
+'''
+Binomial Discrete Distribution
+	Simple but powerful distribution that measures the probability of 
+	sequences of "success / fail" events. all the user has to do is 
+	input the probability of "success" and the number of trials to be 
+	calculated from the set. 
 
+	The CDF of this function measures out the probability of x successes
+	from n trials with a probability of p
+
+	The awesome part of this function, is that I have it triggered so that
+	as the number of trials increases beyond 100 and the probability is
+	less than 1% it will transfer over to a poisson approximation model.
+	Which does a much faster and better job of estimating the situation
+	because it factors in one input variable "theta" that considers
+	a convergence of trial_count*probability. 
+'''
 class Binomial:
-	'implementation of the Binomial Distribution'
-
 	def __init__(self, n, p):
 		if 0.0 <= p and p <= p :
 			self.p = p
@@ -50,16 +68,19 @@ class Binomial:
 		else:
 			print("invalid binomial N value")
 			return 0
-
+		
+		#Trigger Poisson given the conditions that p <= 0.01 and n >= 100
 		if self.p <= 0.01 and self.n >= 100 :
 			self.poisson = Poisson(self.p * self.n)
 		else :
 			self.poisson =  None
-
+	
 	def pmf(self, x):
 		if x >= 0 and x <= self.n :
 			if self.poisson is None :
 				return nCr(self.n, x) * self.p**x * (1.0 - self.p)**(self.n - x)
+
+			#poisson trigger
 			else :
 				return self.poisson.pmf(x)
 
@@ -85,9 +106,11 @@ class Binomial:
 		else :
 			return self.poisson.variance()
 
-
+'''
+Poisson Discrete Approximation
+	Simple Distribution that Approximates the Binomial Distribution.
+'''
 class Poisson:
-	'implementation of the Poisson Distribution'
 	def __init__(self, _lambda):
 		print("using poisson approximation")
 		self._lambda = _lambda
