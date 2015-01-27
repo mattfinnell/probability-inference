@@ -112,11 +112,17 @@ Poisson Discrete Approximation
 '''
 class Poisson:
 	def __init__(self, _lambda):
-		print("using poisson approximation")
 		self._lambda = _lambda
 	
 	def pmf(self, x):
-		return math.e**(-self._lambda) * ((self._lambda**x) / factorial(x))
+		return math.e**(-self._lambda) * ((self._lambda**x) / float(factorial(x)))
+	
+	def cdf(self, x):
+		ret = 0.0
+		for i in range(0, x + 1) :
+			ret += self.pmf(i)
+
+		return ret
 
 	def mean(self):
 		return self._lambda

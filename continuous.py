@@ -130,4 +130,68 @@ class Normal :
 		stdNorm = StandardNormal()
 		z		= (x - self.mean) / sqrt(self.variance)
 		return stdNorm.cdf(z)
+
+def LowerCI(n,x,a) :
+	mean = float(x) / float(n)
+	upper = mean + float(a) * sqrt((mean * (1 - mean)) / float(n))
+
+	return (0, upper)
+
+def UpperCI(n,x,a) :
+	mean = float(x) / float(n)
+	lower = mean - float(a) * sqrt((mean * (1 - mean)) / float(n))
+
+	return (lower, 1)
 		
+def TwoSideCI(n,x,a) :
+	mean = float(x) / float(n)
+	diff = float(a) * sqrt((mean * (1 - mean)) / float(n))
+
+	a = mean - diff
+	b = mean + diff
+
+	return (a, b)
+
+def QuadraticCI(n,x,z) :
+	n = float(n)
+	x = float(x)
+	z = float(z)
+	p = x / n
+
+	denom  = 1 + (z ** 2) / n
+	center = p + (z ** 2) / (2 * n)
+	diff   = z * sqrt(p * (1 - p) / n + (z ** 2) / (4 * n ** 2))
+
+	a = (center - diff) / denom
+	b = (center + diff) / denom
+
+	return (a, b)
+
+def BayesCI(n,x,z) : 
+	return TwoSideCI(n + 4, x + 2, z)
+
+def GetSampleSize(var, error, z) :
+	var   = float(var)
+	error = float(error)
+	z     = float(z)
+
+	return ((z ** 2.0) * var) / (error ** 2.0)
+
+def CI(xbar, var, n, z) :
+	xbar = float(xbar)
+	var = float(var)
+	n = float(n)
+	z = float(z)
+
+	diff = sqrt(var) / sqrt(n)
+
+	l = xbar - diff
+	u = xbar + diff
+
+	return (l, u)
+
+def GetProportionN(err, z) :
+	err = float(err)
+	z   = float(z)
+
+	return (z ** 2.0) / (4.0 * (err ** 2.0))
