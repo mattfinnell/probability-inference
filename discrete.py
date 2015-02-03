@@ -129,3 +129,26 @@ class Poisson:
 
 	def variance(self):
 		return self._lambda
+
+def negativeBinomialPDF(x,r,p) :
+	x = float(x)
+	r = float(r)
+	p = float(p)
+
+	return nCr(x + r - 1, x) * (1.0 / ((p ** -1.0 ) ** (x + r)))
+
+def negativeBinomialCDF(r,p,n) :
+	val = 0.0
+
+	for i in range(0, n + 1) :
+		val += negativeBinomialPDF(i,r,p)
+	
+	return val
+
+for i in range(0, 6) :
+	print "pdf(%d)" % (i), "-->", negativeBinomialPDF(i, 3, 0.5)
+
+print 1 - negativeBinomialCDF(3, 0.5, 5)
+
+
+		
