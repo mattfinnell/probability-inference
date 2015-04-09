@@ -103,7 +103,7 @@ class StandardNormal :
 	def pdf(self, z) : 
 		return StandardNormal.Reciprocal * (e ** -(0.5 * z ** 2.0 ))
 	
-	#holy shit this function is rediculous on paper
+	# holy shit this function is fucked on paper
 	#...just look up Normal Distribution CDF
 	def cdf(self, z) : 
 		return 0.5 * (1 + erf(z / sqrt(2.0)))

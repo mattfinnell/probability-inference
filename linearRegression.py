@@ -13,6 +13,15 @@ class DataSet :
 def Sss(X, Y) :
 	return numpy.float64(sum([X[i] * Y[i] - mean(X) * mean(Y) for i in range(0, len(X))]))
 
+def Sxx(X, Y) :
+	return Sss(X,X)
+
+def Syy(X, Y) :
+	return Sss(Y, Y)
+
+def Sxy(X, Y) :
+	return Sss(X, Y)
+
 def mean(X) :
 	return (numpy.float64(1.0) / numpy.float64(len(X))) * numpy.float64(sum(X))
 
@@ -74,9 +83,6 @@ def interceptCI(X, Y, alpha) :
 def slopeHypothesis(X, Y, null, alpha) :
 	diff = abs((slope(X, Y) - numpy.float64(null))) / slopeError(X, Y)
 	test = abs(stats.t.ppf(alpha / 2.0, len(X) - 2))
-
-	print "t       ", diff
-	print "t-value ", test
 
 	if diff > test :
 		return True
