@@ -124,3 +124,6 @@ def leverage(X, Y, i) :
 def influentials(X, Y) :
 	threshold = 2.0 * (2.0) / float(len(X))
 	return [i for i in range(0, len(X)) if leverage(X,Y,i) > threshold]
+
+def standardDeviation(X) :
+	return math.sqrt(1.0 / (float(len(X)) - 1.0) * sum([x - mean(X) for x in X])**2)
