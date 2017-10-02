@@ -6,7 +6,7 @@ class DataSet :
 	def __init__(self, X, Y) :
 		self.X = X
 		self.Y = Y
-	
+
 	def fn(self, function, *args) :
 		return function(self.X, self.Y, *args)
 
@@ -32,7 +32,7 @@ def intercept(X, Y) :
 	return mean(Y) - slope(X,Y) * mean(X)
 
 def expected(X, Y, x) :
-	return intercept(X, Y) + slope(X, Y) * x 
+	return intercept(X, Y) + slope(X, Y) * x
 
 def residuals(X, Y) :
 	return [Y[i] - expected(X, Y, X[i]) for i in range(0, len(Y))]
@@ -53,7 +53,7 @@ def r(X, Y) :
 	rVal = math.sqrt(rsquared(X, Y))
 	if slope(X, Y) < 0.0 :
 		rVal *= -1.0
-	
+
 	return rVal
 
 def variance(X, Y) :
@@ -86,7 +86,7 @@ def slopeHypothesis(X, Y, null, alpha) :
 
 	if diff > test :
 		return True
-	
+
 	return False
 
 def MSR(X, Y) :
@@ -126,4 +126,31 @@ def influentials(X, Y) :
 	return [i for i in range(0, len(X)) if leverage(X,Y,i) > threshold]
 
 def standardDeviation(X) :
-	return math.sqrt(1.0 / (float(len(X)) - 1.0) * sum([x - mean(X) for x in X])**2)
+	return math.sqrt(1.0 / (float(len(X)) - 1.0) * sum([(x - mean(X))**2.0 for x in X]))
+
+def regularizedStandardDeviation(X) :
+	return standardDeviation(X) / mean(X) * 1000.0
+
+def regularizedError(expected, actual) :
+	return abs(mean(expected) - mean(actual)) / mean(actual) * 1000.0
+
+def difference(X , Y) :
+	return [abs(x - y) for x, y in zip(X, Y)]
+
+''' pipettes '''
+I = [23.6108, 24.1405, 24.0544]
+F = [32.4759, 34.2351, 33.9608]
+E = [10.0, 10.0, 10.0]
+A = difference(I, F)
+
+print standardDeviation(A)
+print regularizedStandardDeviation(A)
+print regularizedError(E, A)
+
+
+
+
+
+
+
+
